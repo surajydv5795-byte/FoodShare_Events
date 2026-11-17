@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodShare Events — Surplus Food Redistribution</title>
+  <meta name="description" content="Connect event organizers, NGOs and couriers to rescue surplus food and feed communities.">
+
+  <!-- Google Fonts: IM Fell English (Headings), Inter (Body & UI), JetBrains Mono (Data/Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons (Mechanical, Vintage Icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#E6C77A',
+            cream: '#F3E6C8',
+            orange: '#E07A1F',
+            green: '#4F8A5B',
+            parchment: '#F5E8CC',
+            brass: '#7A4A12',
+            bgStart: '#3A0A0F',
+            bgEnd: '#1A0507'
+          },
+          fontFamily: {
+            serif: ['"IM Fell English"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Victorian Steampunk Stylesheet -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       TOP NAVIGATION BAR
+       ============================================================ -->
+  <header class="site-nav">
+    <div class="nav-container">
+      <a href="#home" class="nav-brand">
+        <i class="fa-solid fa-gear brand-gear"></i>
+        <span>FoodShare Events</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home" id="nav-home"><i class="fa-solid fa-house-chimney"></i> Home</a></li>
+          <li><a href="#donations" id="nav-donations"><i class="fa-solid fa-boxes-stacked"></i> Browse Food</a></li>
+          <li><a href="#donate" id="nav-donate" style="display:none;"><i class="fa-solid fa-hand-holding-heart"></i> Donate Surplus</a></li>
+          <li><a href="#admin" id="nav-admin" style="display:none;"><i class="fa-solid fa-sliders"></i> Dashboard</a></li>
+          <li><a href="#profile" id="nav-profile" style="display:none;"><i class="fa-solid fa-id-badge"></i> Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-auth">
+        <!-- Guest Controls: Log in (ghost) and Sign up (the only filled button) -->
+        <a href="#login" id="nav-login" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-key"></i> Log in
+        </a>
+        <a href="#register" id="nav-register" class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-scroll"></i> Sign up
+        </a>
+
+        <!-- Authenticated Controls -->
+        <div id="nav-user-info" style="display:none;" class="flex items-center gap-3">
+          <div class="user-badge">
+            <i class="fa-solid fa-user-gear"></i>
+            <span id="nav-user-name">Artisan</span>
+            <span id="nav-user-role" class="role-pill">Donor</span>
+          </div>
+          <button id="nav-logout" class="btn btn-outline btn-sm" title="Log out">
+            <i class="fa-solid fa-right-from-bracket"></i> Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       DYNAMIC APPLICATION CONTAINER
+       ============================================================ -->
+  <main id="app">
+    <!-- Rendered dynamically by Router -->
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="flex items-center gap-2 text-gold text-lg font-serif">
+        <i class="fa-solid fa-compass"></i>
+        <span>FoodShare Events &bull; Sustainable Community Initiative</span>
+      </div>
+      <p class="text-sm text-cream opacity-80 max-w-xl mx-auto">
+        Connect event organizers, NGOs and couriers to rescue surplus food and feed communities.
+      </p>
+      <div class="footer-credits">
+        Constructed by: <strong>Suraj Gama Yadav</strong> (Roll No: 56) &bull; IDEA LAB-3 &bull; Refined Steampunk Architecture
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       LOADING OVERLAY
+       ============================================================ -->
+  <div id="loading-overlay">
+    <div class="flex items-center">
+      <i class="fa-solid fa-gear gear-spinner"></i>
+      <i class="fa-solid fa-gear gear-secondary"></i>
+    </div>
+    <div class="loading-text">
+      Updating FoodShare Network&hellip;
+    </div>
+  </div>
+
+  <!-- Toast Notification Mount -->
+  <div id="toast-container"></div>
+
+  <!-- ============================================================
+       APPLICATION SCRIPTS
+       ============================================================ -->
+  <script src="/js/app.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/donations.js"></script>
+  <script src="/js/admin.js"></script>
+
+</body>
+</html>
