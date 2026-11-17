@@ -53,6 +53,11 @@ function createDonationCard(donation) {
     ? donation.description.substring(0, 65) + '...'
     : (donation.description || '');
 
+  const currentUser = getUser();
+  const donorObjId = donation.donor ? (donation.donor._id || donation.donor.id || donation.donor).toString() : '';
+  const currentUserId = currentUser ? (currentUser._id || currentUser.id || '').toString() : '';
+  const isCardOwner = currentUser && (currentUser.role === 'admin' || (donorObjId && donorObjId === currentUserId) || (donation.donor && donation.donor.email && donation.donor.email === currentUser.email));
+
   return `
     <div class="donation-card card" onclick="navigateTo('/donations/${donation._id}')">
       <div class="donation-card-header">
@@ -84,9 +89,16 @@ function createDonationCard(donation) {
         <span class="time-remaining font-mono">${escapeHtml(timeRemaining)}</span>
       </div>
 
-      <button class="btn btn-outline btn-sm btn-view-details" onclick="event.stopPropagation(); navigateTo('/donations/${donation._id}')">
-        Inspect Details <i class="fa-solid fa-chevron-right text-xs"></i>
-      </button>
+      <div class="flex items-center gap-2 mt-2">
+        <button class="btn btn-outline btn-sm btn-view-details flex-1" onclick="event.stopPropagation(); navigateTo('/donations/${donation._id}')">
+          Inspect Details <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+        ${isCardOwner && donation.status !== 'COMPLETED' && donation.status !== 'CANCELLED' ? `
+          <button class="btn btn-outline btn-sm text-red-700 border-red-700 hover:bg-red-700 hover:text-white px-3" onclick="event.stopPropagation(); deleteDonation('${donation._id}')" title="Remove Consignment">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        ` : ''}
+      </div>
     </div>
   `;
 }
@@ -749,6 +761,23 @@ async function renderDonationDetail(id) {
       `;
     }
 
+    // Donor & Admin Manage Action Panel (Allows Donor to Cancel / Remove Consignment)
+    const detailDonorId = donation.donor ? (donation.donor._id || donation.donor.id || donation.donor).toString() : '';
+    const detailUserId = user ? (user._id || user.id || '').toString() : '';
+    const isDonorOwner = user && (user.role === 'admin' || (detailDonorId && detailDonorId === detailUserId) || (donation.donor && donation.donor.email && donation.donor.email === user.email));
+
+    if (isDonorOwner && donation.status !== 'COMPLETED' && donation.status !== 'CANCELLED') {
+      actionButtonsHtml += `
+        <div class="action-panel mt-6 p-6 card border-2 border-red-700/40 text-center" style="background: rgba(139, 0, 0, 0.04);">
+          <h4 class="text-xl font-bold font-serif text-red-800 mb-2"><i class="fa-solid fa-trash-can"></i> Manage Consignment</h4>
+          <p class="text-sm text-ink-faded mb-4">You registered this surplus consignment. You can remove it from the active manifest at any time.</p>
+          <button class="btn btn-outline text-red-700 border-red-700 hover:bg-red-700 hover:text-white px-6 py-2.5" onclick="deleteDonation('${donation._id}')">
+            <i class="fa-solid fa-trash-can"></i> Remove Consignment
+          </button>
+        </div>
+      `;
+    }
+
     appEl.innerHTML = `
       <section class="page-section donation-detail-page">
         <button class="btn btn-outline btn-sm mb-6" onclick="navigateTo('/donations')">
@@ -896,3 +925,24 @@ async function completeDelivery(donationId) {
     showToast(err.message || 'Failed to complete delivery. Check OTP.', 'error');
   }
 }
+
+async function deleteDonation(donationId) {
+  if (!confirm('Are you sure you want to remove this surplus consignment? It will be removed from the active depot.')) {
+    return;
+  }
+  try {
+    showLoading();
+    try {
+      await api(`/api/donations/${donationId}`, { method: 'DELETE' });
+    } catch (delErr) {
+      await api(`/api/donations/${donationId}/cancel`, { method: 'PUT' });
+    }
+    hideLoading();
+    showToast('Consignment removed successfully!', 'success');
+    window.location.hash = '#donations';
+  } catch (err) {
+    hideLoading();
+    showToast(err.message || 'Failed to remove consignment.', 'error');
+  }
+}
+window.deleteDonation = deleteDonation;

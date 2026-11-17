@@ -528,12 +528,13 @@ const loadHomeManifest = async () => {
   const container = document.getElementById('home-recent-donations');
   if (!container) return;
 
+  const user = AppState.getCurrentUser();
+
   try {
     const data = await api('/donations?status=PENDING');
     const donations = Array.isArray(data) ? data : (data && data.donations) || [];
 
     if (donations.length === 0) {
-      const user = AppState.getCurrentUser();
       let emptyActionHtml = '';
       if (user && (user.role === 'donor' || user.role === 'admin')) {
         emptyActionHtml = `
@@ -606,9 +607,16 @@ const loadHomeManifest = async () => {
             </div>
             <div class="card-footer">
               <span class="text-xs text-ink-muted">By: ${escapeHTML(donorName)}</span>
-              <button class="btn btn-primary btn-sm">
-                Inspect <i class="fa-solid fa-chevron-right text-xs"></i>
-              </button>
+              <div class="flex items-center gap-2">
+                <button class="btn btn-primary btn-sm">
+                  Inspect <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                ${(user && (user.role === 'admin' || (d.donor && ((d.donor._id && (d.donor._id === user._id || d.donor._id === user.id)) || d.donor === user._id || d.donor.email === user.email)))) ? `
+                  <button class="btn btn-outline btn-sm text-red-700 border-red-700 hover:bg-red-700 hover:text-white px-2.5 py-1" onclick="event.stopPropagation(); deleteDonation('${d._id || d.id}')" title="Remove consignment">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                ` : ''}
+              </div>
             </div>
           </div>
         `;

@@ -347,7 +347,9 @@ router.put('/:id/cancel', auth, async (req, res) => {
       return res.status(404).json({ message: 'Donation not found.' });
     }
 
-    const isDonor = donation.donor.toString() === req.user._id.toString();
+    const donorId = (donation.donor && donation.donor._id ? donation.donor._id : donation.donor).toString();
+    const currentUserId = (req.user._id || req.user.id).toString();
+    const isDonor = donorId === currentUserId;
     const isAdmin = req.user.role === 'admin';
 
     if (!isDonor && !isAdmin) {
@@ -365,6 +367,39 @@ router.put('/:id/cancel', auth, async (req, res) => {
   } catch (error) {
     console.error('Error cancelling donation:', error);
     res.status(500).json({ message: 'Server error while cancelling donation.' });
+  }
+});
+
+// ────────────────────────────────────────────────────────────
+// DELETE /api/donations/:id  –  Remove donation (donor or admin)
+// ────────────────────────────────────────────────────────────
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const donation = await Donation.findById(req.params.id);
+
+    if (!donation) {
+      return res.status(404).json({ message: 'Donation not found.' });
+    }
+
+    const donorId = (donation.donor && donation.donor._id ? donation.donor._id : donation.donor).toString();
+    const currentUserId = (req.user._id || req.user.id).toString();
+    const isDonor = donorId === currentUserId;
+    const isAdmin = req.user.role === 'admin';
+
+    if (!isDonor && !isAdmin) {
+      return res.status(403).json({ message: 'Only the donor or an administrator may remove this consignment.' });
+    }
+
+    if (donation.status === 'COMPLETED') {
+      return res.status(400).json({ message: 'Cannot remove a consignment that has already been delivered.' });
+    }
+
+    await Donation.findByIdAndDelete(req.params.id);
+
+    res.json({ message: 'Consignment permanently removed.' });
+  } catch (error) {
+    console.error('Error deleting donation:', error);
+    res.status(500).json({ message: 'Server error while deleting donation.' });
   }
 });
 
