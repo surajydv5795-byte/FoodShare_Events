@@ -1,6 +1,6 @@
 // ============================================================
 // auth.js – Authentication page renderers for FoodShare Events
-// Refined Steampunk aesthetic · Clean Typography · High Contrast
+// Flip7 Design System: Teal, Coral & Gold Theme
 // ============================================================
 
 /* ------------------------------------------------------------------ */
@@ -10,14 +10,17 @@ function renderLogin() {
   const app = document.getElementById('app');
 
   app.innerHTML = `
-    <section class="auth-section">
-      <div class="card auth-card" style="max-width: 480px; margin: 0 auto; padding: 2.25rem;">
+    <section class="auth-section py-12 px-4">
+      <div class="card auth-card" style="max-width: 480px; margin: 0 auto; padding: 2.5rem;">
         <div class="card-header text-center mb-6">
-          <h2 class="auth-heading" style="font-size: 2.1rem; color: var(--ink-dark); margin-bottom: 0.35rem;">
-            <i class="fa-solid fa-key text-orange"></i> Log in
+          <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl">
+            <i class="fa-solid fa-key text-coral"></i>
+          </div>
+          <h2 class="auth-heading" style="font-size: 2rem; color: var(--text-dark); margin-bottom: 0.35rem; font-weight: 800;">
+            Welcome Back
           </h2>
-          <p class="auth-subtitle" style="color: var(--ink-faded); font-size: 0.95rem;">
-            Enter the Workshop &bull; Authenticate your credentials to proceed.
+          <p class="auth-subtitle" style="color: var(--text-muted); font-size: 0.95rem;">
+            Sign in to your FoodShare account to proceed.
           </p>
         </div>
 
@@ -47,15 +50,15 @@ function renderLogin() {
           </div>
 
           <!-- Submit -->
-          <button type="submit" class="btn btn-primary btn-block text-lg py-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block text-lg py-3 mt-3">
             <i class="fa-solid fa-arrow-right-to-bracket"></i> Log in
           </button>
         </form>
 
-        <div class="auth-footer text-center mt-6 pt-4 border-t border-brass/30">
-          <p style="color: var(--ink-faded); font-size: 0.95rem;">
+        <div class="auth-footer text-center mt-6 pt-4 border-t border-primary/20">
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
             Don't have an account?
-            <a href="#register" class="font-bold text-orange hover:underline">Sign up</a>
+            <a href="#register" class="font-bold text-coral hover:underline">Sign up</a>
           </p>
         </div>
       </div>
@@ -105,14 +108,17 @@ function renderRegister() {
   const app = document.getElementById('app');
 
   app.innerHTML = `
-    <section class="auth-section">
-      <div class="card auth-card" style="max-width: 580px; margin: 0 auto; padding: 2.25rem;">
+    <section class="auth-section py-12 px-4">
+      <div class="card auth-card" style="max-width: 580px; margin: 0 auto; padding: 2.5rem;">
         <div class="card-header text-center mb-6">
-          <h2 class="auth-heading" style="font-size: 2.1rem; color: var(--ink-dark); margin-bottom: 0.35rem;">
-            <i class="fa-solid fa-scroll text-orange"></i> Sign up
+          <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl">
+            <i class="fa-solid fa-user-plus text-coral"></i>
+          </div>
+          <h2 class="auth-heading" style="font-size: 2rem; color: var(--text-dark); margin-bottom: 0.35rem; font-weight: 800;">
+            Create an Account
           </h2>
-          <p class="auth-subtitle" style="color: var(--ink-faded); font-size: 0.95rem;">
-            Join the Guild &bull; Register your role to start rescuing surplus food.
+          <p class="auth-subtitle" style="color: var(--text-muted); font-size: 0.95rem;">
+            Join FoodShare &bull; Choose your role to start rescuing surplus food.
           </p>
         </div>
 
@@ -126,7 +132,7 @@ function renderRegister() {
                 type="text"
                 id="regName"
                 class="form-input"
-                placeholder="e.g. Lord Percival"
+                placeholder="e.g. Khushbu Solanki"
                 required
               />
             </div>
@@ -171,25 +177,25 @@ function renderRegister() {
           <div class="form-group">
             <label class="form-label">Select Your Role</label>
             <div class="grid grid-cols-3 gap-3 mt-1">
-              <label class="role-card card p-3 text-center cursor-pointer border border-brass/50 hover:border-orange transition" for="roleDonor" style="background:var(--parchment-light);">
+              <label class="role-card card p-3 text-center cursor-pointer border border-primary/30 hover:border-coral transition" for="roleDonor" style="background:var(--cream);">
                 <input type="radio" name="role" id="roleDonor" value="donor" checked class="hidden" />
-                <div class="role-icon text-xl text-orange mb-1"><i class="fa-solid fa-utensils"></i></div>
-                <div class="font-bold text-sm text-ink-dark">Donor</div>
-                <div class="text-xs text-ink-faded">Event Host / Caterer</div>
+                <div class="role-icon text-xl text-coral mb-1"><i class="fa-solid fa-utensils"></i></div>
+                <div class="font-bold text-sm text-text-dark">Donor</div>
+                <div class="text-xs text-text-muted">Event Host / Caterer</div>
               </label>
 
-              <label class="role-card card p-3 text-center cursor-pointer border border-brass/50 hover:border-orange transition" for="roleNgo" style="background:var(--parchment-light);">
+              <label class="role-card card p-3 text-center cursor-pointer border border-primary/30 hover:border-primary transition" for="roleNgo" style="background:var(--cream);">
                 <input type="radio" name="role" id="roleNgo" value="ngo" class="hidden" />
                 <div class="role-icon text-xl text-green mb-1"><i class="fa-solid fa-shield-heart"></i></div>
-                <div class="font-bold text-sm text-ink-dark">NGO</div>
-                <div class="text-xs text-ink-faded">Food Bank / Shelter</div>
+                <div class="font-bold text-sm text-text-dark">NGO</div>
+                <div class="text-xs text-text-muted">Food Bank / Shelter</div>
               </label>
 
-              <label class="role-card card p-3 text-center cursor-pointer border border-brass/50 hover:border-orange transition" for="roleVolunteer" style="background:var(--parchment-light);">
+              <label class="role-card card p-3 text-center cursor-pointer border border-primary/30 hover:border-primary transition" for="roleVolunteer" style="background:var(--cream);">
                 <input type="radio" name="role" id="roleVolunteer" value="volunteer" class="hidden" />
-                <div class="role-icon text-xl text-blue-700 mb-1"><i class="fa-solid fa-truck-fast"></i></div>
-                <div class="font-bold text-sm text-ink-dark">Courier</div>
-                <div class="text-xs text-ink-faded">Delivery Volunteer</div>
+                <div class="role-icon text-xl text-sky mb-1"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="font-bold text-sm text-text-dark">Courier</div>
+                <div class="text-xs text-text-muted">Delivery Volunteer</div>
               </label>
             </div>
           </div>
@@ -228,15 +234,15 @@ function renderRegister() {
           </div>
 
           <!-- Submit -->
-          <button type="submit" class="btn btn-primary btn-block text-lg py-3 mt-2">
+          <button type="submit" class="btn btn-primary btn-block text-lg py-3 mt-3">
             <i class="fa-solid fa-user-plus"></i> Sign up
           </button>
         </form>
 
-        <div class="auth-footer text-center mt-6 pt-4 border-t border-brass/30">
-          <p style="color: var(--ink-faded); font-size: 0.95rem;">
+        <div class="auth-footer text-center mt-6 pt-4 border-t border-primary/20">
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
             Already have an account?
-            <a href="#login" class="font-bold text-orange hover:underline">Log in</a>
+            <a href="#login" class="font-bold text-coral hover:underline">Log in</a>
           </p>
         </div>
       </div>
@@ -252,15 +258,15 @@ function renderRegister() {
     roleRadios.forEach((radio) => {
       const card = radio.closest('.role-card');
       if (radio.checked) {
-        card.style.borderColor = 'var(--orange)';
-        card.style.boxShadow = '0 0 0 2px var(--orange)';
+        card.style.borderColor = 'var(--coral)';
+        card.style.boxShadow = 'var(--shadow-coral-glow)';
         if (radio.value === 'ngo') {
           orgGroup.style.display = 'flex';
         } else {
           orgGroup.style.display = 'none';
         }
       } else {
-        card.style.borderColor = 'rgba(122, 74, 18, 0.4)';
+        card.style.borderColor = 'rgba(43, 168, 162, 0.3)';
         card.style.boxShadow = 'none';
       }
     });
@@ -339,8 +345,8 @@ async function renderProfile() {
   app.innerHTML = `
     <section class="page-section">
       <div class="card p-8 text-center max-w-md mx-auto">
-        <i class="fa-solid fa-gear fa-spin text-3xl text-brass mb-3"></i>
-        <p class="text-ink-faded font-sans">Loading member profile…</p>
+        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-primary mb-3"></i>
+        <p class="text-text-muted font-sans">Loading member profile…</p>
       </div>
     </section>
   `;
@@ -354,12 +360,12 @@ async function renderProfile() {
     app.innerHTML = `
       <section class="page-section">
         <div class="card p-8 max-w-2xl mx-auto">
-          <div class="flex justify-between items-center pb-4 mb-6 border-b border-brass/30">
+          <div class="flex justify-between items-center pb-4 mb-6 border-b-2 border-dashed border-primary/20">
             <div>
-              <h2 class="text-2xl font-bold font-serif text-ink-dark">
-                <i class="fa-solid fa-id-badge text-orange"></i> Profile
+              <h2 class="text-2xl font-bold font-sans text-text-dark">
+                <i class="fa-solid fa-id-badge text-coral"></i> Profile
               </h2>
-              <p class="text-sm text-ink-faded font-sans">Artisan Dossier &bull; Account Settings</p>
+              <p class="text-sm text-text-muted font-sans">Account Settings &amp; Dossier</p>
             </div>
             <span class="status-badge status-pending font-mono uppercase font-bold text-xs">
               ROLE: ${escapeHTML(user.role || 'user')}
@@ -398,7 +404,7 @@ async function renderProfile() {
               <button type="submit" class="btn btn-primary px-8 py-2.5">
                 <i class="fa-solid fa-floppy-disk"></i> Update Profile
               </button>
-              <button type="button" class="btn btn-outline btn-sm" onclick="AppState.logout()">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="AppState.logout()">
                 <i class="fa-solid fa-right-from-bracket"></i> Log out
               </button>
             </div>

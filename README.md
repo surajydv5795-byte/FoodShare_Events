@@ -1,7 +1,7 @@
 # FoodShare Events (IDEA LAB-3)
 > **Theme:** Data-Driven Smart Solutions for Sustainable and Inclusive Communities  
-> **Author:** Suraj Gama Yadav (Roll No: 56)  
-> **Aesthetic:** Victorian Steampunk Design System (`#B5A642` Brass, `#5C0000` Mahogany, `#D46A00` Clockwork Orange)
+> **Author:** Khushbu Solanki (Roll No: 12)  
+> **Aesthetic:** Flip7 Design System (`#2BA8A2` Teal, `#FFD23F` Gold, `#EF6C4A` Coral)
 
 ---
 
@@ -10,27 +10,29 @@
 1. **Event Organizers / Caterers (Donors):** Upload details about surplus food (quantity, cooked/raw type, expiry countdown, pickup location).
 2. **NGOs & Food Banks (Receivers):** Receive notifications of available food consignments and claim them for their communities.
 3. **Volunteers (Delivery Couriers):** Accept pickup routing tasks to transport food from the venue to the beneficiary NGO.
-4. **Master Ledger Administrators:** System overseers who verify artisans, monitor active consignments, and resolve disputes.
+4. **Master Ledger Administrators:** System overseers who verify members, monitor active consignments, and resolve disputes.
 
 ---
 
-## 2. Victorian Steampunk UI & Design System
+## 2. Flip7 Design System & Accessibility
 
-The user interface strictly adheres to the **Victorian Steampunk** aesthetic specified in the PRD:
+The user interface strictly adheres to the modern **Flip7** retro-playful palette:
 * **Color Palette:**
-  * **Primary (Brass):** `#B5A642` — Dominant borders, headers, and metallic accents.
-  * **Secondary (Rich Mahogany):** `#5C0000` — Deep parchment headers, navbars, and cards.
-  * **Accent 1 (Deep Teal):** `#008080` — Active states, verified credentials, and badges.
-  * **Accent 2 (Clockwork Orange):** `#D46A00` — Call-to-Action (CTA) buttons (e.g., *"Report Surplus Food"*).
-  * **Backgrounds (Parchment & Ivory):** `#F5DEB3` / `#FFFFF0` — Readable text areas with subtle leather/parchment styling.
-* **Typography:**
-  * **Headings (H1–H6):** `IM Fell English` (Weight 700) — Letterpress vintage feel.
-  * **Body Text:** `IM Fell English` (Weight 400) — Max 72 characters per line for optimal readability.
+  * **Primary Teal:** `#2BA8A2` (Main UI, headers, and accents), Dark: `#1E8C86`, Light: `#3CC4BD`, BG: `#E8F6F5`.
+  * **Accent Gold:** `#FFD23F` (Primary CTAs, badges, highlights), Dark: `#E6B800`.
+  * **Coral:** `#EF6C4A` (Urgent actions, expiry warnings, energy), Dark: `#D45233`.
+  * **Cream:** `#FFF8E7` (Card backgrounds, input surfaces).
+  * **Surface Base:** `#EFF8F7` (Light, accessible page background).
+  * **Surface Card:** `#FFFFFF` (High-contrast white cards with 6px colored left-accent bar).
+* **Typography & Accessibility:**
+  * **Headings:** Extra-bold (`800`) system font stack with high contrast ratio (WCAG AA/AAA compliant).
+  * **Body Text:** `Inter` (system-ui) for clear readability across all screen sizes.
   * **Monospace / Technical Data:** `JetBrains Mono` — Tracking IDs, GPS coordinates, timestamps, and OTPs.
+  * **Accessibility Features:** Skip-to-main-content link, 44px+ touch targets, visible focus outlines, high-contrast dark text on light surfaces.
 * **UI Behavior:**
-  * **Buttons:** Rounded (`0.5rem`), Clockwork Orange fill. Hover state: darkens by 8% with a tactile `translateY(1px)` press effect.
-  * **Cards:** Parchment background, 1px Brass stroke, subtle shadow, spring-weighted hover scale (`1.03` over 200ms).
-  * **Loading States:** Rotating mechanical gears (dual gear animation), zero standard spinners. No emojis permitted — all iconography uses mechanical/vintage Font Awesome symbols.
+  * **Buttons:** Pill-shaped (`999px`), gold gradient with colored glow shadows.
+  * **Cards:** White surface, 16px radius, colored left-accent border, spring-weighted hover lift.
+  * **Loading States:** Modern circular notch spinners with teal glow.
 
 ---
 
@@ -39,7 +41,7 @@ The user interface strictly adheres to the **Victorian Steampunk** aesthetic spe
 * **Frontend:** HTML5, CSS3, Vanilla JavaScript SPA Router, Tailwind CSS, Font Awesome.
 * **Backend:** Node.js with Express.js.
 * **Database & Storage:**
-  * Native **MongoDB with Mongoose**.
+  * Native **MongoDB Atlas with Mongoose**.
   * **Resilient Dual-Mode Engine:** If an external MongoDB server is not running on `localhost:27017`, the system automatically activates an In-Memory Data Engine with pre-seeded demo records for immediate, frictionless demonstration.
 * **Security & Tokens:** JSON Web Tokens (JWT) and Bcrypt password hashing.
 
@@ -48,15 +50,18 @@ The user interface strictly adheres to the **Victorian Steampunk** aesthetic spe
 ## 4. Core Features & User Flows (PRD Section 5)
 
 ### 4.1. Food Donation Flow (Donor)
-1. Donor logs in and navigates to **"Report Surplus Food"**.
-2. Fills out consignment form: Event Name, Food Type (`Cooked` / `Raw`), Quantity (Meals/Kg), Expected Expiry Time, Contact Phone, and Pickup Location.
-3. Consignment status is registered as `PENDING`.
+1. Donor logs in and navigates to **"Donate Surplus Food"**.
+2. 3-Step Wizard:
+   * **Step 1:** Consignment Specifications (Event Name, Food Type `Cooked`/`Raw`, Quantity, Description).
+   * **Step 2:** Pickup Window & Dispatch Location (Expiry Threshold, Venue Address, On-Site Phone).
+   * **Step 3:** Review & Confirm.
+3. Consignment status is registered as `PENDING` (Available).
 
 ### 4.2. Claiming & Delivery Flow (NGO & Courier)
 1. Nearby NGOs receive an automated alert and browse the active depot manifest.
-2. NGO logs in and clicks **"Claim This Food"**. Status changes to `CLAIMED` and a secure **6-digit delivery OTP** is minted.
-3. Volunteer couriers browse claimed deliveries and click **"Accept Pickup"**. Status changes to `IN_TRANSIT`.
-4. Volunteer arrives at the destination; the NGO confirms genuine handover by entering the OTP. Status transitions to `COMPLETED`.
+2. NGO logs in and clicks **"Claim This Consignment"**. Status changes to `CLAIMED` and a secure **6-digit delivery OTP** is minted.
+3. Volunteer couriers browse claimed deliveries and click **"Accept Pickup Assignment"**. Status changes to `IN_TRANSIT`.
+4. Volunteer arrives at the destination; the NGO confirms genuine handover by providing the OTP. Status transitions to `COMPLETED`.
 
 ### 4.3. Edge Case Handling (PRD Section 6)
 * **30-Minute Courier Escalation:** If no volunteer courier accepts a claimed consignment within 30 minutes, an alert is surfaced requesting NGO self-pickup.
@@ -74,17 +79,13 @@ The user interface strictly adheres to the **Victorian Steampunk** aesthetic spe
 ### 5.2. Installation & Launch
 1. Open terminal in the project directory:
    ```bash
-   cd "c:\Users\Others login\Music\FoodShare_Events"
-   ```
-2. Install dependencies (if not already installed):
-   ```bash
    npm install
    ```
-3. Start the application:
+2. Start the application:
    ```bash
    npm start
    ```
-4. Access the web application in your browser at:
+3. Access the web application in your browser at:
    ```
    http://localhost:3000
    ```
@@ -102,46 +103,10 @@ For examiner review and quick demonstration, four pre-configured roles are ready
 | **Volunteer (Courier)** | `volunteer@foodshare.org` | `password123` | Accept claimed pickups, transit routing, submit OTP completion |
 | **Master Ledger Admin** | `admin@foodshare.org` | `password123` | Oversee users registry, verify accounts, ban bad actors, audit ledger |
 
-*(You can also register brand new accounts on the registration page at any time).*
-
 ---
 
-## 7. Project Structure
-
-```text
-FoodShare_Events/
-├── public/
-│   ├── index.html              # Main Steampunk Single Page Application
-│   ├── css/
-│   │   └── styles.css          # Victorian Steampunk design system stylesheet
-│   └── js/
-│       ├── app.js              # SPA hash router, AppState, notifications & landing
-│       ├── auth.js             # Authentication, login, registration, and user dossier
-│       ├── donations.js        # Surplus reporting, Depot grid, detail view & OTP flow
-│       └── admin.js            # Admin Master Ledger, stats dashboard & moderation
-├── server/
-│   ├── server.js               # Express application entry point
-│   ├── config/
-│   │   ├── db.js               # Dual-mode MongoDB connector & fallback coordinator
-│   │   └── mockStore.js        # Resilient in-memory storage & pre-seeded demo records
-│   ├── middleware/
-│   │   └── auth.js             # JWT authentication, optionalAuth & role guards
-│   ├── models/
-│   │   ├── User.js             # User Mongoose schema & dual-mode proxy
-│   │   └── Donation.js         # Donation consignment schema & dual-mode proxy
-│   └── routes/
-│       ├── auth.js             # Registration, login, profile endpoints
-│       ├── donations.js        # CRUD, claim, accept, OTP completion & auto-expiry
-│       └── admin.js            # User management, verification, banning & stats
-├── test_integration.js         # End-to-end integration test suite
-├── package.json
-└── README.md
-```
-
----
-
-## 8. Academic Project Metadata
-* **Student:** Suraj Gama Yadav
-* **Roll Number:** 56
+## 7. Academic Project Metadata
+* **Student:** Khushbu Solanki
+* **Roll Number:** 12
 * **Lab:** IDEA LAB-3
 * **Project:** FoodShare Events — Data-Driven Smart Solutions for Sustainable and Inclusive Communities

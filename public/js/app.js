@@ -1,6 +1,6 @@
 // ============================================================
 //  FoodShare Events — Main Application Engine & Router
-//  Theme: Refined Victorian Steampunk (Oxblood, Gold, Cream, Brass)
+//  Theme: Flip7 Teal-Coral-Gold Design System
 // ============================================================
 
 'use strict';
@@ -85,7 +85,7 @@ const AppState = {
     this.clearCurrentUser();
     updateNav();
     window.location.hash = '#home';
-    showToast('Your session has ended. Safe travels!', 'info');
+    showToast('Your session has ended. See you soon!', 'info');
   }
 };
 
@@ -202,13 +202,14 @@ const showToast = (message, type = 'info') => {
   }
 
   const icons = {
-    success: 'fa-solid fa-circle-check',
-    error: 'fa-solid fa-triangle-exclamation',
-    info: 'fa-solid fa-gear'
+    success: 'fa-solid fa-circle-check text-green',
+    error: 'fa-solid fa-circle-exclamation text-red-600',
+    info: 'fa-solid fa-circle-info text-primary'
   };
 
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
+  toast.setAttribute('role', 'alert');
   toast.innerHTML = `
     <i class="${icons[type] || icons.info}" style="font-size:1.25rem;"></i>
     <span style="flex:1;">${escapeHTML(message)}</span>
@@ -238,7 +239,7 @@ const hideLoading = () => {
 window.hideLoading = hideLoading;
 
 // ------------------------------------------------------------
-//  4. NAVIGATION CONTROLLER (Renamed Labels: Fix 2.3)
+//  4. NAVIGATION CONTROLLER
 // ------------------------------------------------------------
 const updateNav = () => {
   const user = AppState.getCurrentUser();
@@ -295,7 +296,7 @@ const updateNav = () => {
 window.updateNav = updateNav;
 
 // ------------------------------------------------------------
-//  5. HOME PAGE RENDERER (Refined Steampunk Spec)
+//  5. HOME PAGE RENDERER (Flip7 Teal-Coral-Gold Design System)
 // ------------------------------------------------------------
 const renderHome = async () => {
   const app = document.getElementById('app');
@@ -308,7 +309,7 @@ const renderHome = async () => {
   if (role === 'ngo') {
     heroCtasHtml = `
       <div class="hero-ctas">
-        <a href="#donations" class="btn btn-clockwork text-lg px-8 py-3.5 shadow-lg">
+        <a href="#donations" class="btn btn-primary text-lg px-8 py-3.5 shadow-lg">
           <i class="fa-solid fa-hand-holding-heart"></i> Claim Available Food
         </a>
         <a href="#profile" class="btn btn-ghost text-lg px-8 py-3.5 shadow-lg">
@@ -319,7 +320,7 @@ const renderHome = async () => {
   } else if (role === 'volunteer') {
     heroCtasHtml = `
       <div class="hero-ctas">
-        <a href="#donations" class="btn btn-clockwork text-lg px-8 py-3.5 shadow-lg">
+        <a href="#donations" class="btn btn-primary text-lg px-8 py-3.5 shadow-lg">
           <i class="fa-solid fa-truck-fast"></i> View Delivery Routes
         </a>
         <a href="#profile" class="btn btn-ghost text-lg px-8 py-3.5 shadow-lg">
@@ -330,8 +331,8 @@ const renderHome = async () => {
   } else if (role === 'donor') {
     heroCtasHtml = `
       <div class="hero-ctas">
-        <a href="#donate" class="btn btn-clockwork text-lg px-8 py-3.5 shadow-lg">
-          <i class="fa-solid fa-hand-holding-heart"></i> Donate Surplus Food
+        <a href="#donate" class="btn btn-primary text-lg px-8 py-3.5 shadow-lg">
+          <i class="fa-solid fa-plus-circle"></i> Donate Surplus Food
         </a>
         <a href="#donations" class="btn btn-ghost text-lg px-8 py-3.5 shadow-lg">
           <i class="fa-solid fa-boxes-stacked"></i> Browse Food
@@ -341,11 +342,11 @@ const renderHome = async () => {
   } else if (role === 'admin') {
     heroCtasHtml = `
       <div class="hero-ctas">
-        <a href="#donate" class="btn btn-clockwork text-lg px-8 py-3.5 shadow-lg">
-          <i class="fa-solid fa-hand-holding-heart"></i> Donate Surplus Food
+        <a href="#donate" class="btn btn-primary text-lg px-8 py-3.5 shadow-lg">
+          <i class="fa-solid fa-plus-circle"></i> Donate Surplus Food
         </a>
         <a href="#admin" class="btn btn-ghost text-lg px-8 py-3.5 shadow-lg">
-          <i class="fa-solid fa-sliders"></i> Master Ledger
+          <i class="fa-solid fa-chart-line"></i> Master Dashboard
         </a>
       </div>
     `;
@@ -353,11 +354,11 @@ const renderHome = async () => {
     // Guest (not logged in)
     heroCtasHtml = `
       <div class="hero-ctas">
-        <a href="#donations" class="btn btn-clockwork text-lg px-8 py-3.5 shadow-lg">
+        <a href="#donations" class="btn btn-primary text-lg px-8 py-3.5 shadow-lg">
           <i class="fa-solid fa-boxes-stacked"></i> Browse Food
         </a>
         <a href="#register" class="btn btn-ghost text-lg px-8 py-3.5 shadow-lg">
-          <i class="fa-solid fa-scroll"></i> Sign up
+          <i class="fa-solid fa-user-plus"></i> Sign up
         </a>
       </div>
     `;
@@ -367,9 +368,9 @@ const renderHome = async () => {
     <!-- ====== HERO BANNER ====== -->
     <section class="hero-section">
       <div class="max-w-4xl mx-auto">
-        <!-- High Contrast Hero Badge (Spec Fix 2.1) -->
+        <!-- Flip7 High-Contrast Hero Badge -->
         <div class="hero-badge">
-          <i class="fa-solid fa-gear fa-spin"></i>
+          <i class="fa-solid fa-seedling text-coral"></i>
           <span>IDEA LAB-3 &bull; SUSTAINABLE &amp; INCLUSIVE COMMUNITIES</span>
         </div>
 
@@ -377,12 +378,12 @@ const renderHome = async () => {
           Redistribute Surplus Food,<br>Feed Communities
         </h1>
 
-        <!-- Single Plain Sentence Hero Paragraph (Spec Fix 2.4) -->
+        <!-- Clear, Friendly Subtitle -->
         <p class="hero-subtitle">
-          Connect event organizers, NGOs and couriers to rescue surplus food and feed communities.
+          Connect event organizers, NGOs and volunteer couriers to rescue surplus food and feed communities.
         </p>
         <p class="hero-flavor">
-          Our data-driven network redirects banquet provisions to local kitchens in real time.
+          Our smart data-driven network redirects banquet provisions to local kitchens in real time.
         </p>
 
         <!-- Role-Aware Hero CTAs -->
@@ -390,8 +391,8 @@ const renderHome = async () => {
       </div>
     </section>
 
-    <!-- ====== METRICS TICKER (Spec Fix 2.5: Consistent Brass Color on Parchment) ====== -->
-    <section class="max-w-6xl mx-auto px-6 -mt-8 relative z-10">
+    <!-- ====== METRICS TICKER ====== -->
+    <section class="max-w-6xl mx-auto px-6 -mt-8 relative z-10" aria-label="Impact Metrics">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="stat-card card">
           <div class="font-mono text-3xl font-bold" id="metric-meals">1,420+</div>
@@ -413,10 +414,10 @@ const renderHome = async () => {
     </section>
 
     <!-- ====== CORE MECHANISMS ====== -->
-    <section class="page-section">
+    <section class="page-section" aria-label="How FoodShare Works">
       <div class="page-header">
-        <h2 class="page-title"><i class="fa-solid fa-cogs text-gold"></i> The Triple-Piston Workflow</h2>
-        <p class="page-subtitle">How our data-driven logistics engine coordinates food rescue in real-time</p>
+        <h2 class="page-title"><i class="fa-solid fa-arrows-spin text-primary"></i> How FoodShare Works</h2>
+        <p class="page-subtitle">A coordinated 3-step logistics engine connecting donors, shelters, and couriers</p>
       </div>
 
       <div class="features-grid">
@@ -427,7 +428,7 @@ const renderHome = async () => {
           </div>
           <h3>1. Surplus Logged</h3>
           <p>
-            Event hosts &amp; caterers register prepared banquets or raw provisions with exact quantity and expiry countdowns.
+            Event hosts and caterers register prepared banquets or fresh provisions with exact quantity and expiry countdowns.
           </p>
         </div>
 
@@ -438,7 +439,7 @@ const renderHome = async () => {
           </div>
           <h3>2. Immediate Claim</h3>
           <p>
-            Vetted NGOs and food banks within radius browse available food and claim it with a single click, receiving an OTP code.
+            Vetted NGOs and food banks browse available food and claim it with a single click, receiving an OTP code.
           </p>
         </div>
 
@@ -455,41 +456,43 @@ const renderHome = async () => {
       </div>
     </section>
 
-    <!-- ====== EDGE CASES & SMART ENGINE CALLOUT (PRD Section 6) ====== -->
-    <section class="max-w-6xl mx-auto px-6 py-6 mb-12">
-      <div class="card p-8 bg-parchment-light border-2 border-brass">
-        <div class="flex items-center gap-3 mb-4 text-ink-dark">
-          <i class="fa-solid fa-shield-cat text-2xl text-orange"></i>
-          <h3 class="text-2xl font-bold font-serif text-ink-dark">Smart Safety &amp; Redistribution Protocols</h3>
+    <!-- ====== SMART SAFETY & REDISTRIBUTION PROTOCOLS ====== -->
+    <section class="max-w-6xl mx-auto px-6 py-6 mb-12" aria-label="Safety Protocols">
+      <div class="card p-8 bg-white border-2 border-primary/30">
+        <div class="flex items-center gap-3 mb-4 text-text-dark">
+          <div class="w-10 h-10 rounded-full bg-coral/15 flex items-center justify-center text-coral text-xl">
+            <i class="fa-solid fa-shield-heart"></i>
+          </div>
+          <h3 class="text-2xl font-bold font-sans text-text-dark">Smart Safety &amp; Redistribution Protocols</h3>
         </div>
-        <p class="mb-6 text-ink-faded">
+        <p class="mb-6 text-text-body">
           Engineered to satisfy stringent external audit criteria with automated edge-case handling:
         </p>
 
         <div class="grid md:grid-cols-3 gap-6">
-          <div class="p-4 bg-white/70 border border-brass/40 rounded">
-            <div class="font-bold text-ink-dark font-sans mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-clock-rotate-left text-orange"></i> 30-Min Courier Escalation
+          <div class="p-5 bg-surface-base border border-primary/20 rounded-xl">
+            <div class="font-bold text-text-dark font-sans mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-coral"></i> 30-Min Courier Escalation
             </div>
-            <p class="text-sm text-ink-faded">
+            <p class="text-sm text-text-body">
               If no volunteer courier accepts a claimed consignment within 30 minutes, the claiming NGO is automatically alerted to arrange self-pickup.
             </p>
           </div>
 
-          <div class="p-4 bg-white/70 border border-brass/40 rounded">
-            <div class="font-bold text-ink-dark font-sans mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-triangle-exclamation text-red-700"></i> 1-Hour Expiry Lock
+          <div class="p-5 bg-surface-base border border-primary/20 rounded-xl">
+            <div class="font-bold text-text-dark font-sans mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-coral"></i> 1-Hour Expiry Lock
             </div>
-            <p class="text-sm text-ink-faded">
+            <p class="text-sm text-text-body">
               If food remains uncollected 60 minutes before its stated expiry threshold, the system flags it as EXPIRED to protect community health.
             </p>
           </div>
 
-          <div class="p-4 bg-white/70 border border-brass/40 rounded">
-            <div class="font-bold text-ink-dark font-sans mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-gavel text-green-700"></i> Anti-Spoofing &amp; Ban Powers
+          <div class="p-5 bg-surface-base border border-primary/20 rounded-xl">
+            <div class="font-bold text-text-dark font-sans mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-gavel text-primary-dark"></i> Anti-Spoofing &amp; Ban Powers
             </div>
-            <p class="text-sm text-ink-faded">
+            <p class="text-sm text-text-body">
               Dashboard administrators possess authority to revoke credentials of bad actors posting spurious or substandard consignments.
             </p>
           </div>
@@ -498,23 +501,23 @@ const renderHome = async () => {
     </section>
 
     <!-- ====== RECENT SURPLUS MANIFEST ====== -->
-    <section class="page-section pt-0">
-      <div class="flex justify-between items-end mb-6 pb-3 border-b border-gold/40">
+    <section class="page-section pt-0" aria-label="Surplus Manifest">
+      <div class="flex justify-between items-end mb-6 pb-3 border-b-2 border-dashed border-primary/30">
         <div>
-          <h2 class="text-2xl font-bold text-gold font-serif">
-            <i class="fa-solid fa-scroll text-orange"></i> Active Surplus Manifest
+          <h2 class="text-2xl font-bold text-text-dark font-sans flex items-center gap-2">
+            <i class="fa-solid fa-boxes-stacked text-coral"></i> Active Surplus Manifest
           </h2>
-          <p class="text-sm text-cream opacity-80">Live consignments awaiting claim or delivery</p>
+          <p class="text-sm text-text-muted">Live consignments awaiting claim or delivery</p>
         </div>
-        <a href="#donations" class="btn btn-outline btn-sm">
+        <a href="#donations" class="btn btn-ghost btn-sm">
           Browse All Food <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
 
       <div id="home-recent-donations" class="donations-grid">
         <div class="card p-8 text-center col-span-full">
-          <i class="fa-solid fa-gear fa-spin text-3xl text-gold mb-3"></i>
-          <p class="text-ink-faded font-sans">Connecting to live surplus dispatch ledger&hellip;</p>
+          <i class="fa-solid fa-circle-notch fa-spin text-3xl text-primary mb-3"></i>
+          <p class="text-text-muted font-sans">Connecting to live surplus dispatch ledger&hellip;</p>
         </div>
       </div>
     </section>
@@ -538,38 +541,38 @@ const loadHomeManifest = async () => {
       let emptyActionHtml = '';
       if (user && (user.role === 'donor' || user.role === 'admin')) {
         emptyActionHtml = `
-          <p class="text-sm text-ink-faded max-w-md mx-auto mb-4 font-sans">
-            All registered consignments have been claimed. Be the organizer to report new surplus from your banquet.
+          <p class="text-sm text-text-muted max-w-md mx-auto mb-4 font-sans">
+            All registered consignments have been claimed. Be the organizer to report new surplus from your event.
           </p>
-          <a href="#donate" class="btn btn-clockwork btn-sm"><i class="fa-solid fa-plus"></i> Donate Surplus Food</a>
+          <a href="#donate" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Donate Surplus Food</a>
         `;
       } else if (user && user.role === 'ngo') {
         emptyActionHtml = `
-          <p class="text-sm text-ink-faded max-w-md mx-auto mb-4 font-sans">
+          <p class="text-sm text-text-muted max-w-md mx-auto mb-4 font-sans">
             All registered consignments have been claimed. Check back shortly as event organizers report fresh surplus.
           </p>
-          <a href="#donations" class="btn btn-clockwork btn-sm"><i class="fa-solid fa-rotate"></i> Refresh Food Manifest</a>
+          <a href="#donations" class="btn btn-primary btn-sm"><i class="fa-solid fa-rotate"></i> Refresh Food Manifest</a>
         `;
       } else if (user && user.role === 'volunteer') {
         emptyActionHtml = `
-          <p class="text-sm text-ink-faded max-w-md mx-auto mb-4 font-sans">
+          <p class="text-sm text-text-muted max-w-md mx-auto mb-4 font-sans">
             No pending pickups at this moment. You will be alerted when recipient NGOs claim upcoming consignments.
           </p>
-          <a href="#donations" class="btn btn-clockwork btn-sm"><i class="fa-solid fa-rotate"></i> Refresh Dispatch</a>
+          <a href="#donations" class="btn btn-primary btn-sm"><i class="fa-solid fa-rotate"></i> Refresh Dispatch</a>
         `;
       } else {
         emptyActionHtml = `
-          <p class="text-sm text-ink-faded max-w-md mx-auto mb-4 font-sans">
+          <p class="text-sm text-text-muted max-w-md mx-auto mb-4 font-sans">
             All registered consignments have been claimed. Join our network to receive instant alerts when surplus is logged.
           </p>
-          <a href="#register" class="btn btn-clockwork btn-sm"><i class="fa-solid fa-scroll"></i> Join FoodShare</a>
+          <a href="#register" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i> Join FoodShare</a>
         `;
       }
 
       container.innerHTML = `
         <div class="card p-8 text-center col-span-full border-dashed">
-          <i class="fa-solid fa-boxes-stacked text-3xl text-brass mb-3"></i>
-          <h4 class="font-bold text-lg text-ink-dark font-serif mb-2">Depot Currently Cleared</h4>
+          <i class="fa-solid fa-boxes-stacked text-3xl text-primary mb-3"></i>
+          <h4 class="font-bold text-lg text-text-dark font-sans mb-2">Depot Currently Cleared</h4>
           ${emptyActionHtml}
         </div>
       `;
@@ -584,7 +587,7 @@ const loadHomeManifest = async () => {
         const expiryFormatted = d.expiryTime ? new Date(d.expiryTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A';
 
         return `
-          <div class="donation-card card" onclick="navigateTo('#donations/${d._id || d.id}')">
+          <div class="donation-card card" onclick="navigateTo('#donations/${d._id || d.id}')" role="button" tabindex="0" aria-label="View consignment ${escapeHTML(d.eventName || 'Surplus')}">
             <div>
               <div class="card-header-flex">
                 <span class="badge ${foodTypeBadge}">${(d.foodType || 'cooked').toUpperCase()}</span>
@@ -593,11 +596,11 @@ const loadHomeManifest = async () => {
               <h3 class="card-title">${escapeHTML(d.eventName || d.description || 'Banquet Surplus')}</h3>
               <div class="card-meta">
                 <div class="card-meta-row">
-                  <i class="fa-solid fa-weight-hanging"></i>
+                  <i class="fa-solid fa-weight-hanging text-primary"></i>
                   <span>${escapeHTML(d.quantity)} ${escapeHTML(d.quantityUnit || 'meals')}</span>
                 </div>
                 <div class="card-meta-row">
-                  <i class="fa-solid fa-location-dot"></i>
+                  <i class="fa-solid fa-location-dot text-coral"></i>
                   <span>${escapeHTML(d.pickupAddress || 'Address on file')}</span>
                 </div>
                 <div class="card-timer font-mono">
@@ -606,13 +609,13 @@ const loadHomeManifest = async () => {
               </div>
             </div>
             <div class="card-footer">
-              <span class="text-xs text-ink-muted">By: ${escapeHTML(donorName)}</span>
+              <span class="text-xs text-text-muted">By: ${escapeHTML(donorName)}</span>
               <div class="flex items-center gap-2">
-                <button class="btn btn-primary btn-sm">
+                <button class="btn btn-primary btn-sm" aria-label="Inspect details">
                   Inspect <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
                 ${(user && (user.role === 'admin' || (d.donor && ((d.donor._id && (d.donor._id === user._id || d.donor._id === user.id)) || d.donor === user._id || d.donor.email === user.email)))) ? `
-                  <button class="btn btn-outline btn-sm text-red-700 border-red-700 hover:bg-red-700 hover:text-white px-2.5 py-1" onclick="event.stopPropagation(); deleteDonation('${d._id || d.id}')" title="Remove consignment">
+                  <button class="btn btn-outline btn-sm text-coral border-coral hover:bg-coral hover:text-white px-2.5 py-1" onclick="event.stopPropagation(); deleteDonation('${d._id || d.id}')" aria-label="Remove consignment" title="Remove consignment">
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
                 ` : ''}
@@ -630,15 +633,15 @@ const loadHomeManifest = async () => {
             <span class="badge badge-cooked">COOKED</span>
             <span class="status-badge status-pending"><i class="fa-solid fa-circle-check text-xs"></i> AVAILABLE</span>
           </div>
-          <h3 class="card-title">Victorian Gala Banquet Surplus</h3>
+          <h3 class="card-title">Community Banquet Surplus</h3>
           <div class="card-meta">
-            <div class="card-meta-row"><i class="fa-solid fa-weight-hanging"></i> <span>85 meals (Parchment roast &amp; lentils)</span></div>
-            <div class="card-meta-row"><i class="fa-solid fa-location-dot"></i> <span>Grand Hotel Ballroom, Central Quarter</span></div>
+            <div class="card-meta-row"><i class="fa-solid fa-weight-hanging text-primary"></i> <span>85 meals (Rice, dal &amp; vegetables)</span></div>
+            <div class="card-meta-row"><i class="fa-solid fa-location-dot text-coral"></i> <span>Community Center Ballroom, Central Quarter</span></div>
             <div class="card-timer font-mono"><i class="fa-solid fa-hourglass-half"></i> Expiry: in 3 hours</div>
           </div>
         </div>
         <div class="card-footer">
-          <span class="text-xs text-ink-muted">By: Royal Catering Guild</span>
+          <span class="text-xs text-text-muted">By: Royal Catering Co.</span>
           <button class="btn btn-primary btn-sm">Inspect</button>
         </div>
       </div>
@@ -649,15 +652,15 @@ const loadHomeManifest = async () => {
             <span class="badge badge-raw">RAW</span>
             <span class="status-badge status-pending"><i class="fa-solid fa-circle-check text-xs"></i> AVAILABLE</span>
           </div>
-          <h3 class="card-title">Harvest Exhibition Produce</h3>
+          <h3 class="card-title">Harvest Farmers Market Produce</h3>
           <div class="card-meta">
-            <div class="card-meta-row"><i class="fa-solid fa-weight-hanging"></i> <span>120 kg (Root vegetables &amp; grains)</span></div>
-            <div class="card-meta-row"><i class="fa-solid fa-location-dot"></i> <span>Expo Pavilion 4, Iron District</span></div>
+            <div class="card-meta-row"><i class="fa-solid fa-weight-hanging text-primary"></i> <span>120 kg (Fresh vegetables &amp; grains)</span></div>
+            <div class="card-meta-row"><i class="fa-solid fa-location-dot text-coral"></i> <span>Market Pavilion 4, Green District</span></div>
             <div class="card-timer font-mono"><i class="fa-solid fa-hourglass-half"></i> Expiry: in 24 hours</div>
           </div>
         </div>
         <div class="card-footer">
-          <span class="text-xs text-ink-muted">By: Agri-Union Scribes</span>
+          <span class="text-xs text-text-muted">By: Local Farmers Collective</span>
           <button class="btn btn-primary btn-sm">Inspect</button>
         </div>
       </div>
@@ -752,7 +755,7 @@ Router.add('login', () => {
   if (typeof renderLogin === 'function') {
     renderLogin();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Log in...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Log in...</p>';
   }
 });
 
@@ -760,7 +763,7 @@ Router.add('register', () => {
   if (typeof renderRegister === 'function') {
     renderRegister();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Sign up...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Sign up...</p>';
   }
 });
 
@@ -768,7 +771,7 @@ Router.add('donations', () => {
   if (typeof renderDonations === 'function') {
     renderDonations();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Browse Food...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Browse Food...</p>';
   }
 });
 
@@ -776,7 +779,7 @@ Router.add('donate', () => {
   if (typeof renderDonateForm === 'function') {
     renderDonateForm();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Donate Portal...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Donate Portal...</p>';
   }
 });
 
@@ -796,7 +799,7 @@ Router.add('profile', () => {
   if (typeof renderProfile === 'function') {
     renderProfile();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Profile...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Profile...</p>';
   }
 });
 
@@ -804,7 +807,7 @@ Router.add('admin', () => {
   if (typeof renderAdmin === 'function') {
     renderAdmin();
   } else {
-    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-gold">Loading Dashboard...</p>';
+    document.getElementById('app').innerHTML = '<p class="text-center p-12 text-primary font-bold">Loading Dashboard...</p>';
   }
 });
 

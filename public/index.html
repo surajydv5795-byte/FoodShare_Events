@@ -4,35 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoodShare Events — Surplus Food Redistribution</title>
-  <meta name="description" content="Connect event organizers, NGOs and couriers to rescue surplus food and feed communities.">
+  <meta name="description" content="Connect event organizers, NGOs and volunteer couriers to rescue surplus food and feed communities.">
 
-  <!-- Google Fonts: IM Fell English (Headings), Inter (Body & UI), JetBrains Mono (Data/Code) -->
+  <!-- Favicon: Clean Food Redistribution Logo (replaces default globe) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='16' fill='%232BA8A2'/><path d='M7 17 C7 23 11 25 16 25 C21 25 25 23 25 17 Z' fill='%23FFF8E7'/><path d='M16 13 C16 9 12 7 10 8 C9 11 12 13 16 13 Z' fill='%23FFD23F'/><path d='M16 13 C16 9 20 7 22 8 C23 11 20 13 16 13 Z' fill='%23EF6C4A'/><circle cx='16' cy='15' r='2' fill='%231E8C86'/></svg>">
+
+  <!-- Google Fonts: Inter (UI & Headings), JetBrains Mono (Data/OTP/Tracking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome Icons (Mechanical, Vintage Icons) -->
+  <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS CDN configured with Flip7 Design System -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            gold: '#E6C77A',
-            cream: '#F3E6C8',
-            orange: '#E07A1F',
-            green: '#4F8A5B',
-            parchment: '#F5E8CC',
-            brass: '#7A4A12',
-            bgStart: '#3A0A0F',
-            bgEnd: '#1A0507'
+            primary: '#2BA8A2',
+            'primary-light': '#3CC4BD',
+            'primary-dark': '#1E8C86',
+            'primary-bg': '#E8F6F5',
+            gold: '#FFD23F',
+            'gold-light': '#FFE47A',
+            'gold-dark': '#E6B800',
+            coral: '#EF6C4A',
+            'coral-light': '#FF8A6A',
+            'coral-dark': '#D45233',
+            cream: '#FFF8E7',
+            sky: '#5DADE2',
+            'surface-base': '#EFF8F7',
+            'surface-card': '#FFFFFF',
+            'text-dark': '#1A2332',
+            'text-body': '#2C3E50',
+            'text-muted': '#5A6C7D',
+            success: '#27AE60',
+            error: '#E74C3C'
           },
           fontFamily: {
-            serif: ['"IM Fell English"', 'Georgia', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace']
           }
         }
@@ -40,49 +53,56 @@
     }
   </script>
 
-  <!-- Victorian Steampunk Stylesheet -->
+  <!-- Flip7 Teal-Coral-Gold Stylesheet -->
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
   <!-- ============================================================
+       ACCESSIBILITY: SKIP TO MAIN CONTENT LINK
+       ============================================================ -->
+  <a href="#app" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================
        TOP NAVIGATION BAR
        ============================================================ -->
-  <header class="site-nav">
+  <header class="site-nav" role="banner">
     <div class="nav-container">
-      <a href="#home" class="nav-brand">
-        <i class="fa-solid fa-gear brand-gear"></i>
+      <a href="#home" class="nav-brand" aria-label="FoodShare Events Home">
+        <div class="brand-logo-badge" aria-hidden="true">
+          <i class="fa-solid fa-bowl-food"></i>
+        </div>
         <span>FoodShare Events</span>
       </a>
 
-      <nav>
+      <nav aria-label="Main Navigation">
         <ul class="nav-links">
-          <li><a href="#home" id="nav-home"><i class="fa-solid fa-house-chimney"></i> Home</a></li>
-          <li><a href="#donations" id="nav-donations"><i class="fa-solid fa-boxes-stacked"></i> Browse Food</a></li>
-          <li><a href="#donate" id="nav-donate" style="display:none;"><i class="fa-solid fa-hand-holding-heart"></i> Donate Surplus</a></li>
-          <li><a href="#admin" id="nav-admin" style="display:none;"><i class="fa-solid fa-sliders"></i> Dashboard</a></li>
-          <li><a href="#profile" id="nav-profile" style="display:none;"><i class="fa-solid fa-id-badge"></i> Profile</a></li>
+          <li><a href="#home" id="nav-home"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a></li>
+          <li><a href="#donations" id="nav-donations"><i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i> Browse Food</a></li>
+          <li><a href="#donate" id="nav-donate" style="display:none;"><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> Donate Surplus</a></li>
+          <li><a href="#admin" id="nav-admin" style="display:none;"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Dashboard</a></li>
+          <li><a href="#profile" id="nav-profile" style="display:none;"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> Profile</a></li>
         </ul>
       </nav>
 
       <div class="nav-auth">
-        <!-- Guest Controls: Log in (ghost) and Sign up (the only filled button) -->
-        <a href="#login" id="nav-login" class="btn btn-outline btn-sm">
-          <i class="fa-solid fa-key"></i> Log in
+        <!-- Guest Controls -->
+        <a href="#login" id="nav-login" class="btn btn-ghost btn-sm">
+          <i class="fa-solid fa-key" aria-hidden="true"></i> Log in
         </a>
         <a href="#register" id="nav-register" class="btn btn-primary btn-sm">
-          <i class="fa-solid fa-scroll"></i> Sign up
+          <i class="fa-solid fa-user-plus" aria-hidden="true"></i> Sign up
         </a>
 
         <!-- Authenticated Controls -->
         <div id="nav-user-info" style="display:none;" class="flex items-center gap-3">
           <div class="user-badge">
-            <i class="fa-solid fa-user-gear"></i>
-            <span id="nav-user-name">Artisan</span>
+            <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
+            <span id="nav-user-name">Member</span>
             <span id="nav-user-role" class="role-pill">Donor</span>
           </div>
-          <button id="nav-logout" class="btn btn-outline btn-sm" title="Log out">
-            <i class="fa-solid fa-right-from-bracket"></i> Log out
+          <button id="nav-logout" class="btn btn-ghost btn-sm" aria-label="Log out of FoodShare Events" title="Log out">
+            <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> Log out
           </button>
         </div>
       </div>
@@ -90,26 +110,26 @@
   </header>
 
   <!-- ============================================================
-       DYNAMIC APPLICATION CONTAINER
+       DYNAMIC APPLICATION CONTAINER (MAIN)
        ============================================================ -->
-  <main id="app">
+  <main id="app" role="main" tabindex="-1">
     <!-- Rendered dynamically by Router -->
   </main>
 
   <!-- ============================================================
-       FOOTER
+       FOOTER (Updated with Khushbu Solanki - Roll No: 12)
        ============================================================ -->
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo">
     <div class="footer-content">
-      <div class="flex items-center gap-2 text-gold text-lg font-serif">
-        <i class="fa-solid fa-compass"></i>
+      <div class="flex items-center justify-center gap-2 text-primary font-bold text-lg">
+        <i class="fa-solid fa-seedling text-coral" aria-hidden="true"></i>
         <span>FoodShare Events &bull; Sustainable Community Initiative</span>
       </div>
-      <p class="text-sm text-cream opacity-80 max-w-xl mx-auto">
-        Connect event organizers, NGOs and couriers to rescue surplus food and feed communities.
+      <p class="text-sm text-text-body opacity-90 max-w-xl mx-auto">
+        Connect event organizers, NGOs and volunteer couriers to rescue surplus food and feed communities.
       </p>
       <div class="footer-credits">
-        Constructed by: <strong>Suraj Gama Yadav</strong> (Roll No: 56) &bull; IDEA LAB-3 &bull; Refined Steampunk Architecture
+        Constructed by: <strong>Khushbu Solanki</strong> (Roll No: 12) &bull; IDEA LAB-3 &bull; Modern Sustainable Architecture
       </div>
     </div>
   </footer>
@@ -117,10 +137,9 @@
   <!-- ============================================================
        LOADING OVERLAY
        ============================================================ -->
-  <div id="loading-overlay">
-    <div class="flex items-center">
-      <i class="fa-solid fa-gear gear-spinner"></i>
-      <i class="fa-solid fa-gear gear-secondary"></i>
+  <div id="loading-overlay" role="status" aria-live="polite" aria-label="Loading content">
+    <div class="loading-spinner-box">
+      <i class="fa-solid fa-circle-notch fa-spin loading-icon" aria-hidden="true"></i>
     </div>
     <div class="loading-text">
       Updating FoodShare Network&hellip;
@@ -128,7 +147,7 @@
   </div>
 
   <!-- Toast Notification Mount -->
-  <div id="toast-container"></div>
+  <div id="toast-container" role="region" aria-live="polite" aria-label="Notifications"></div>
 
   <!-- ============================================================
        APPLICATION SCRIPTS

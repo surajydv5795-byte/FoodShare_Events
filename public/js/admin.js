@@ -1,6 +1,6 @@
 // ============================================================
 //  FoodShare Events — Admin Dashboard Renderer
-//  Victorian control-panel aesthetic · Vanilla JS
+//  Flip7 Design System · Modern Sustainable Dashboard
 // ============================================================
 
 /* global api, showToast, showLoading, hideLoading, currentUser */
@@ -19,14 +19,13 @@ async function renderAdmin() {
   // ── Access guard ──────────────────────────────────────────
   if (!currentUser || currentUser.role !== 'admin') {
     app.innerHTML = `
-      <div class="access-denied-container">
-        <div class="access-denied-card">
-          <div class="access-denied-icon">
-            <i class="fas fa-lock"></i>
-            <i class="fas fa-gear access-denied-gear"></i>
+      <div class="access-denied-container p-12 text-center">
+        <div class="card max-w-md mx-auto p-8 border-2 border-coral">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-coral/15 flex items-center justify-center text-coral text-3xl">
+            <i class="fa-solid fa-lock"></i>
           </div>
-          <h2 class="access-denied-title">Access Denied</h2>
-          <p class="access-denied-msg">Authorized Personnel Only</p>
+          <h2 class="text-2xl font-bold font-sans text-text-dark mb-2">Access Denied</h2>
+          <p class="text-text-muted">Authorized Personnel Only. Please log in with administrator credentials.</p>
         </div>
       </div>`;
     return;
@@ -58,35 +57,35 @@ async function renderAdmin() {
       <!-- Header -->
       <header class="admin-header">
         <div class="admin-header-title">
-          <i class="fas fa-gear admin-header-icon"></i>
+          <i class="fa-solid fa-chart-line admin-header-icon text-primary"></i>
           <h1>Admin Dashboard</h1>
         </div>
-        <p class="admin-header-sub">Command &amp; Control Console</p>
+        <p class="admin-header-sub">System Command &amp; Control Console</p>
       </header>
 
       <!-- Stats Cards -->
       <div class="admin-stats-grid">
-        ${renderStatsCard('Total Donors',        adminStats.totalDonors       ?? 0, 'fa-gear')}
-        ${renderStatsCard('Total NGOs',           adminStats.totalNGOs         ?? 0, 'fa-shield')}
-        ${renderStatsCard('Total Volunteers',     adminStats.totalVolunteers   ?? 0, 'fa-compass')}
-        ${renderStatsCard('Active Donations',     adminStats.activeDonations   ?? 0, 'fa-clock')}
-        ${renderStatsCard('Completed Deliveries', adminStats.completedDeliveries ?? 0, 'fa-check')}
+        ${renderStatsCard('Total Donors',        adminStats.totalDonors       ?? 0, 'fa-utensils')}
+        ${renderStatsCard('Total NGOs',           adminStats.totalNGOs         ?? 0, 'fa-shield-heart')}
+        ${renderStatsCard('Total Volunteers',     adminStats.totalVolunteers   ?? 0, 'fa-truck-fast')}
+        ${renderStatsCard('Active Donations',     adminStats.activeDonations   ?? 0, 'fa-boxes-stacked')}
+        ${renderStatsCard('Completed Deliveries', adminStats.completedDeliveries ?? 0, 'fa-circle-check')}
         ${renderStatsCard('Expired Items',        adminStats.expiredItems      ?? 0, 'fa-triangle-exclamation')}
       </div>
 
       <!-- Tabs -->
-      <nav class="admin-tabs">
+      <nav class="admin-tabs" role="tablist">
         <button class="admin-tab ${adminActiveTab === 'users'    ? 'admin-tab--active' : ''}"
-                data-tab="users">
-          <i class="fas fa-users"></i> Users Registry
+                data-tab="users" role="tab" aria-selected="${adminActiveTab === 'users'}">
+          <i class="fa-solid fa-users"></i> Users Registry
         </button>
         <button class="admin-tab ${adminActiveTab === 'donations' ? 'admin-tab--active' : ''}"
-                data-tab="donations">
-          <i class="fas fa-book"></i> Donations Ledger
+                data-tab="donations" role="tab" aria-selected="${adminActiveTab === 'donations'}">
+          <i class="fa-solid fa-book"></i> Donations Ledger
         </button>
         <button class="admin-tab ${adminActiveTab === 'activity'  ? 'admin-tab--active' : ''}"
-                data-tab="activity">
-          <i class="fas fa-clock-rotate-left"></i> Activity Log
+                data-tab="activity" role="tab" aria-selected="${adminActiveTab === 'activity'}">
+          <i class="fa-solid fa-clock-rotate-left"></i> Activity Log
         </button>
       </nav>
 
@@ -97,13 +96,13 @@ async function renderAdmin() {
     </section>
 
     <!-- Confirmation Modal (hidden) -->
-    <div id="admin-confirm-modal" class="admin-modal-overlay" style="display:none;">
+    <div id="admin-confirm-modal" class="admin-modal-overlay" style="display:none;" role="dialog" aria-modal="true">
       <div class="admin-modal">
         <h3 class="admin-modal-title" id="admin-modal-title">Confirm Action</h3>
         <p  class="admin-modal-body"  id="admin-modal-body"></p>
         <div class="admin-modal-actions">
-          <button class="btn btn--secondary" id="admin-modal-cancel">Cancel</button>
-          <button class="btn btn--danger"    id="admin-modal-confirm">Confirm</button>
+          <button class="btn btn-ghost" id="admin-modal-cancel">Cancel</button>
+          <button class="btn btn-danger" id="admin-modal-confirm">Confirm</button>
         </div>
       </div>
     </div>
@@ -117,7 +116,7 @@ function renderStatsCard(title, value, icon) {
   return `
     <div class="admin-stat-card">
       <div class="admin-stat-icon">
-        <i class="fas ${icon}"></i>
+        <i class="fa-solid ${icon}"></i>
       </div>
       <div class="admin-stat-info">
         <span class="admin-stat-value">${value}</span>
@@ -147,30 +146,30 @@ function renderUsersRegistry() {
   const rows = filtered.map(u => {
     const roleBadge   = `<span class="badge badge--${u.role}">${capitalize(u.role)}</span>`;
     const verifiedCol = u.verified
-      ? '<span class="text-success"><i class="fas fa-check-circle"></i> Yes</span>'
-      : '<span class="text-muted"><i class="fas fa-times-circle"></i> No</span>';
+      ? '<span class="text-green font-bold"><i class="fa-solid fa-circle-check"></i> Yes</span>'
+      : '<span class="text-text-muted"><i class="fa-solid fa-circle-xmark"></i> No</span>';
     const bannedCol   = u.banned
-      ? '<span class="text-danger"><i class="fas fa-ban"></i> Banned</span>'
-      : '<span class="text-success">Active</span>';
+      ? '<span class="text-coral font-bold"><i class="fa-solid fa-ban"></i> Banned</span>'
+      : '<span class="text-green font-bold">Active</span>';
 
     // Action buttons
     const verifyBtn = !u.verified
-      ? `<button class="btn btn--sm btn--teal admin-verify-btn" data-id="${u._id || u.id}">
-           <i class="fas fa-check"></i> Verify
+      ? `<button class="btn btn--sm btn--teal admin-verify-btn" data-id="${u._id || u.id}" aria-label="Verify user">
+           <i class="fa-solid fa-check"></i> Verify
          </button>`
       : '';
 
     const banBtn = !u.banned
-      ? `<button class="btn btn--sm btn--danger admin-ban-btn" data-id="${u._id || u.id}" data-name="${escAttr(u.name)}">
-           <i class="fas fa-ban"></i> Ban
+      ? `<button class="btn btn--sm btn--danger admin-ban-btn" data-id="${u._id || u.id}" data-name="${escAttr(u.name)}" aria-label="Ban user">
+           <i class="fa-solid fa-ban"></i> Ban
          </button>`
-      : `<button class="btn btn--sm btn--success admin-unban-btn" data-id="${u._id || u.id}">
-           <i class="fas fa-unlock"></i> Unban
+      : `<button class="btn btn--sm btn--success admin-unban-btn" data-id="${u._id || u.id}" aria-label="Unban user">
+           <i class="fa-solid fa-unlock"></i> Unban
          </button>`;
 
     return `
       <tr>
-        <td>${esc(u.name)}</td>
+        <td class="font-bold">${esc(u.name)}</td>
         <td>${esc(u.email)}</td>
         <td>${roleBadge}</td>
         <td>${verifiedCol}</td>
@@ -184,9 +183,9 @@ function renderUsersRegistry() {
       <!-- Filter -->
       <div class="admin-filter-bar">
         <label class="admin-filter-label" for="admin-role-filter">
-          <i class="fas fa-filter"></i> Filter by Role:
+          <i class="fa-solid fa-filter text-primary"></i> Filter by Role:
         </label>
-        <select id="admin-role-filter" class="admin-select">
+        <select id="admin-role-filter" class="admin-select" aria-label="Filter users by role">
           ${roles.map(r => `<option value="${r}" ${r === adminUserRoleFilter ? 'selected' : ''}>${capitalize(r)}</option>`).join('')}
         </select>
       </div>
@@ -218,7 +217,7 @@ function renderDonationsLedger() {
     const id        = d._id || d.id || '—';
     const shortId   = typeof id === 'string' && id.length > 8 ? id.slice(-8) : id;
     const event     = esc(d.eventName  || d.event || '—');
-    const donor     = esc(d.donorName  || d.donor || '—');
+    const donor     = esc(d.donorName  || (d.donor && d.donor.name) || d.donor || '—');
     const foodType  = esc(d.foodType   || d.type  || '—');
     const status    = d.status || 'unknown';
     const created   = d.createdAt ? formatDate(d.createdAt) : '—';
@@ -226,16 +225,16 @@ function renderDonationsLedger() {
     const statusBadge = `<span class="badge badge--${status}">${capitalize(status)}</span>`;
 
     return `
-      <tr class="admin-donation-row" data-id="${id}" role="button" tabindex="0">
-        <td><code class="mono">${shortId}</code></td>
-        <td>${event}</td>
+      <tr class="admin-donation-row cursor-pointer" data-id="${id}" role="button" tabindex="0">
+        <td><code class="font-mono font-bold text-primary">${shortId}</code></td>
+        <td class="font-bold">${event}</td>
         <td>${donor}</td>
         <td>${foodType}</td>
         <td>${statusBadge}</td>
-        <td class="mono">${created}</td>
+        <td class="font-mono text-sm">${created}</td>
         <td class="admin-actions-cell">
-          <button class="btn btn--sm btn--danger admin-delete-donation-btn" data-id="${id}" title="Delete donation">
-            <i class="fas fa-trash"></i> Delete
+          <button class="btn btn--sm btn--danger admin-delete-donation-btn" data-id="${id}" title="Delete donation" aria-label="Delete donation">
+            <i class="fa-solid fa-trash"></i> Delete
           </button>
         </td>
       </tr>`;
@@ -266,7 +265,6 @@ function renderDonationsLedger() {
 
 // ── Activity Log ─────────────────────────────────────────────
 function renderActivityLog() {
-  // Show the most recent 10 donations as activity entries
   const recent = [...adminDonations]
     .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
     .slice(0, 10);
@@ -280,7 +278,7 @@ function renderActivityLog() {
 
   const items = recent.map(d => {
     const ts      = d.createdAt ? formatTimestamp(d.createdAt) : '—';
-    const user    = esc(d.donorName || d.donor || 'Unknown');
+    const user    = esc(d.donorName || (d.donor && d.donor.name) || d.donor || 'Unknown');
     const food    = esc(d.foodType  || d.type  || 'item');
     const status  = d.status || 'created';
     const action  = `Donation of <strong>${food}</strong> — status: <span class="badge badge--${status}">${capitalize(status)}</span>`;
@@ -289,9 +287,9 @@ function renderActivityLog() {
       <li class="admin-activity-item">
         <span class="admin-activity-dot"></span>
         <div class="admin-activity-body">
-          <time class="admin-activity-time mono">${ts}</time>
+          <time class="admin-activity-time font-mono">${ts}</time>
           <p class="admin-activity-desc">${action}</p>
-          <span class="admin-activity-user"><i class="fas fa-user"></i> ${user}</span>
+          <span class="admin-activity-user"><i class="fa-solid fa-user"></i> ${user}</span>
         </div>
       </li>`;
   }).join('');
@@ -312,8 +310,12 @@ function bindAdminEvents() {
     btn.addEventListener('click', () => {
       adminActiveTab = btn.dataset.tab;
       // Update active class
-      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('admin-tab--active'));
+      document.querySelectorAll('.admin-tab').forEach(t => {
+        t.classList.remove('admin-tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('admin-tab--active');
+      btn.setAttribute('aria-selected', 'true');
       // Re-render content
       document.getElementById('admin-tab-content').innerHTML = renderTabContent();
       bindTabContentEvents();
@@ -421,7 +423,6 @@ function bindTabContentEvents() {
   // ── Donation row click (view detail) ──────────────────────
   document.querySelectorAll('.admin-donation-row').forEach(row => {
     row.addEventListener('click', (e) => {
-      // Don't trigger when clicking action buttons
       if (e.target.closest('.admin-actions-cell')) return;
       const donationId = row.dataset.id;
       if (typeof renderDonationDetail === 'function') {
@@ -486,11 +487,11 @@ async function refreshAdminData() {
   const statsGrid = document.querySelector('.admin-stats-grid');
   if (statsGrid) {
     statsGrid.innerHTML = `
-      ${renderStatsCard('Total Donors',        adminStats.totalDonors         ?? 0, 'fa-gear')}
-      ${renderStatsCard('Total NGOs',           adminStats.totalNGOs           ?? 0, 'fa-shield')}
-      ${renderStatsCard('Total Volunteers',     adminStats.totalVolunteers     ?? 0, 'fa-compass')}
-      ${renderStatsCard('Active Donations',     adminStats.activeDonations     ?? 0, 'fa-clock')}
-      ${renderStatsCard('Completed Deliveries', adminStats.completedDeliveries ?? 0, 'fa-check')}
+      ${renderStatsCard('Total Donors',        adminStats.totalDonors         ?? 0, 'fa-utensils')}
+      ${renderStatsCard('Total NGOs',           adminStats.totalNGOs           ?? 0, 'fa-shield-heart')}
+      ${renderStatsCard('Total Volunteers',     adminStats.totalVolunteers     ?? 0, 'fa-truck-fast')}
+      ${renderStatsCard('Active Donations',     adminStats.activeDonations     ?? 0, 'fa-boxes-stacked')}
+      ${renderStatsCard('Completed Deliveries', adminStats.completedDeliveries ?? 0, 'fa-circle-check')}
       ${renderStatsCard('Expired Items',        adminStats.expiredItems        ?? 0, 'fa-triangle-exclamation')}
     `;
   }
